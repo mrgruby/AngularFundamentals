@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class EventThumbnailComponent implements OnInit {//{green: event?.time === '8:00 am', bold: event?.time === '8:00 am'}
 
   constructor() { }
-  @Input() event;
+  @Input() event;//event comes from the events-list parent component.
 
   ngOnInit(): void {
   }
