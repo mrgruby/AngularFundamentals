@@ -10,6 +10,8 @@ export class CreateEventComponent implements OnInit {
 
   constructor(private router:Router) { }
 
+  public isDirty: boolean = true;
+
   ngOnInit(): void {
   }
   cancel(){
