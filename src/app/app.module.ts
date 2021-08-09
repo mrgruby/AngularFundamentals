@@ -15,6 +15,7 @@ import { Error404Component } from './errors/404.component';
 import { EventRouteActivatorService } from './shared/services/event-route-activator.service';
 import { EventsListResolverService } from './shared/services/events-list-resolver.service';
 import { AuthService } from './shared/services/auth.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,8 @@ import { AuthService } from './shared/services/auth.service';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(appRoutes)
   ],
   //Providers are shared across modules in the app, so if they are registered here in app.module, they can be used in the entire app.
