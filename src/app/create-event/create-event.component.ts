@@ -7,28 +7,13 @@ import { EventServiceService } from '../shared/services/event-service.service';
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.css']
 })
-export class CreateEventComponent implements OnInit {
-  newEvent: any;
+export class CreateEventComponent {
   constructor(private router:Router, private eventService:EventServiceService) { }
+  event;
 
   public isDirty: boolean = true;
 
-  ngOnInit(): void {
-    this.newEvent = {
-      name: 'New event',
-      date: '9/9/2021',
-      time: '12am',
-      price: '500',
-      location: {
-        address:'The address street',
-        city:'The city',
-        country:'The country',
-      },
-      onlineUrl:'http://theUrl.com',
-      imageUrl:'http://theUrl.com/test.jpg',
-
-    }
-  }
+  
   cancel(){
     this.router.navigate(['/events']);
   }
@@ -38,5 +23,4 @@ export class CreateEventComponent implements OnInit {
     this.isDirty = false;
     this.router.navigate(['/events']);
   }
-
 }

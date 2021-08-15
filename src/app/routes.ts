@@ -5,11 +5,13 @@ import { CreateEventComponent } from "./create-event/create-event.component";
 import { Error404Component } from "./errors/404.component";
 import { EventRouteActivatorService } from "./shared/services/event-route-activator.service";
 import { EventsListResolverService } from "./shared/services/events-list-resolver.service";
+import { CreateSessionComponent } from "./create-session/create-session.component"; 
 
 export const appRoutes:Routes = [
     {path: 'events/new', component: CreateEventComponent, canDeactivate: ['canDeactivateCreateEvent']},//This uses a function as a route guard. Check app.module to see how it is hooked up
     {path: 'events', component: EventsListComponent, resolve:{events:EventsListResolverService}},//See notes
-    {path: 'events/:id', component: EventDetailsComponent, canActivate: [EventRouteActivatorService]},//This uses a service as a route guard
+    {path: 'events/:id', component: EventDetailsComponent, canActivate: [EventRouteActivatorService]},//This uses a service as a route guard,
+    {path: 'events/session/new', component: CreateSessionComponent},
     {path: '404', component: Error404Component},
     {path: '', redirectTo: '/events', pathMatch: 'full'},
     {
