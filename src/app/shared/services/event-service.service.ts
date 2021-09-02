@@ -332,10 +332,16 @@ export class EventServiceService {
     return EVENTS.find(e => e.id === id);
   }
 
+  //Save a newly created event.
   saveEvent(event){
     event.id = 999;
     event.session = [];
     EVENTS.push(event);
+  }
+
+  updateEvent(event){
+    let index = EVENTS.findIndex(x => x.id = event.id);
+    EVENTS[index] = event;
   }
 }
 
