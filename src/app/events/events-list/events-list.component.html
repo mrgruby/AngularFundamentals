@@ -3,7 +3,7 @@
     <hr />
     <div class="row">
         <div *ngFor="let event of events" class="col-md-5">
-            <app-event-thumbnail (click)= "handleThumbnailClick(event.name)" [event]="event"></app-event-thumbnail>
+            <app-event-thumbnail [event]="event"></app-event-thumbnail>
             <!-- [event]="event" makes the event object available in the event-thumbnail component via an input parameter called event,
             thus we are passing data from the events-list component to the event-thumbnail child component-->
          </div>

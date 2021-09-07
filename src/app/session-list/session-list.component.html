@@ -1,11 +1,20 @@
-<div class="row" *ngFor="let session of sessions">
-    <div class="col-md-10">
-      <div class="well">
-          <h4>{{session.name}}</h4>
-          <h6>{{session.presenter}}</h6>
-          <span>Duration: {{session.duration}}</span><br />
-          <span>Level: {{session.level}}</span>
-          <p>{{session.abstract}}</p>
+<!-- sessions comes from the sessions input parameter defined in the SessionListComponent, and they are added to it in the eventDetails component html -->
+<div class="row" *ngFor="let session of filteredSessions">
+  <div class="col-md-10">
+    <!-- The title added to the collapsible-well Component, using the title input parameter.
+The title can then be used in the collapsible-well Component html, and the output will be shown here in the app-session-list element -->
+    <collapsible-well>
+      <div well-title>
+        {{session.name}}
+        <i *ngIf="session.voters.length > 3" class="glyphicon glyphicon-fire" style="color:red;"></i>
       </div>
-    </div>
+
+      <div well-body> 
+        <h6>Presenter: {{session.presenter}}</h6>
+        <span>Duration: {{session.duration | duration}}</span><br />
+        <span>Level: {{session.level}}</span>
+        <p>{{session.abstract}}</p>
+      </div>
+    </collapsible-well>
   </div>
+</div>

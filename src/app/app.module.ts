@@ -6,7 +6,7 @@ import { EventsListComponent } from './events/events-list/events-list.component'
 import { NavbarComponent } from './nav/navbar/navbar.component';
 import { EventThumbnailComponent } from './event-thumbnail/event-thumbnail.component';
 import { EventServiceService } from './shared/services/event-service.service';
-import { ToasterService } from './shared/services/toaster.service';
+import { TOASTR_TOKEN, Toastr } from './shared/services/toaster.service';
 import { EventDetailsComponent } from './event-details/event-details.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
@@ -18,6 +18,10 @@ import { AuthService } from './shared/services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateSessionComponent } from './create-session/create-session.component';
 import { SessionListComponent } from './session-list/session-list.component';
+import { CollapsibleWellComponent } from './shared/collapsible-well/collapsible-well.component';
+import { DurationPipe } from './shared/pipes/duration.pipe';
+
+let toastr:Toastr = window['toastr'];
 
 @NgModule({
   declarations: [
@@ -28,7 +32,7 @@ import { SessionListComponent } from './session-list/session-list.component';
     EventDetailsComponent,
     CreateEventComponent, 
     Error404Component, 
-    CreateSessionComponent, SessionListComponent
+    CreateSessionComponent, SessionListComponent, CollapsibleWellComponent, DurationPipe
   ],
   imports: [
     BrowserModule,
@@ -40,7 +44,10 @@ import { SessionListComponent } from './session-list/session-list.component';
   //Therefore, the auth service is registered here.
   providers: [
     EventServiceService,
-    ToasterService,
+    {
+      provide: TOASTR_TOKEN, 
+      useValue: toastr
+    },
     EventRouteActivatorService,
     EventsListResolverService,
     {

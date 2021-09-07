@@ -1,0 +1,10 @@
+<div (click)="toggleContent()" class="well pointable">
+    <h4>
+        <ng-content select="[well-title]"></ng-content>
+        
+    </h4>   
+    <!-- ng-content is used to show the contents of the collapsible-well element, which is placed in the session-list.component.html
+    title comes from the title input parameter defined in collapsible-well.component.ts, and it is added to this parameter in the the session-list.component.html
+where the collapsible-well element is used. This is an example of content projection.-->
+    <ng-content *ngIf="visible" select="[well-body]"></ng-content>
+</div>

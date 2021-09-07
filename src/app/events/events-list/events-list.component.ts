@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventServiceService } from 'src/app/shared/services/event-service.service';
 import { IEvent } from 'src/app/models/event.model';
-import { ToasterService } from 'src/app/shared/services/toaster.service';
-
 declare let toastr;
 
 @Component({
@@ -13,7 +11,7 @@ declare let toastr;
 })
 export class EventsListComponent implements OnInit {
 
-  constructor(private service: EventServiceService, private toastrService: ToasterService, private route: ActivatedRoute) { }
+  constructor(private service: EventServiceService, private route: ActivatedRoute) { }
 
   events: IEvent[];
   ngOnInit(): void {
@@ -24,10 +22,4 @@ export class EventsListComponent implements OnInit {
   // getEvents(){
   //   return this.service.getEvents();
   // }
-
-  handleThumbnailClick(name){
-
-    this.toastrService.success(name);
-  }
-
 }

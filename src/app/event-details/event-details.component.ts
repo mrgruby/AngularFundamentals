@@ -11,6 +11,8 @@ import { EventServiceService } from '../shared/services/event-service.service';
 export class EventDetailsComponent implements OnInit {
   event: IEvent;
   addMode:boolean;
+  filterBy:string = 'all';
+  sortBy:string = 'votes';
 
   constructor(private eventService: EventServiceService, private route:ActivatedRoute) { }
 
