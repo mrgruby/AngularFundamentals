@@ -15,7 +15,7 @@ export class AuthService{
     }
 
     isAuthenticated(){
-        return !!this.currentUser;//Returns true if the current user object is set
+        return !!this.currentUser;//Returns true if the current user object is set. !! converts to boolean
     }
 
     updateCurrentUser(firstName:string, lastName:string){

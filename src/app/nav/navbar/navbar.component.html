@@ -41,3 +41,10 @@
       </div>
     </div>
   </div>
+
+  <!-- Use content projection as for the collapsible-well -->
+  <simple-modal title="Found Sessions">
+    <div class="list-group">
+      <a class="list-group-item" *ngFor="let session of foundSessions" [routerLink]="['/events', session.eventId]">{{session.name}}</a>
+    </div>
+  </simple-modal>

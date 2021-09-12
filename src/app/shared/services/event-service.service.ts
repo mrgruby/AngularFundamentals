@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { EmitterVisitorContext } from '@angular/compiler';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { IEvent } from 'src/app/models/event.model';
+import { IEvent, ISession } from 'src/app/models/event.model';
 
-const EVENTS:IEvent[] = [
+const EVENTS: IEvent[] = [
   {
     id: 1,
     name: 'Angular Connect',
@@ -84,7 +85,7 @@ const EVENTS:IEvent[] = [
   {
     id: 2,
     name: 'ng-nl',
-    date: new Date( '4/15/2037'),
+    date: new Date('4/15/2037'),
     time: '9:00 am',
     price: 950.00,
     imageUrl: '/assets/images/ng-nl.png',
@@ -136,7 +137,7 @@ const EVENTS:IEvent[] = [
         abstract: `In this session, Lukas will present the 
         secret to being awesome, and how he became the President 
         of the United States through his amazing programming skills, 
-        showing how you too can be success with just attitude.`, 
+        showing how you too can be success with just attitude.`,
         voters: ['bradgreen']
       },
     ]
@@ -144,7 +145,7 @@ const EVENTS:IEvent[] = [
   {
     id: 3,
     name: 'ng-conf 2037',
-    date: new Date( '5/4/2037'),
+    date: new Date('5/4/2037'),
     time: '9:00 am',
     price: 759.00,
     imageUrl: '/assets/images/ng-conf.png',
@@ -226,7 +227,7 @@ const EVENTS:IEvent[] = [
   {
     id: 4,
     name: 'UN Angular Summit',
-    date: new Date( '6/10/2037'),
+    date: new Date('6/10/2037'),
     time: '8:00 am',
     price: 800.00,
     imageUrl: '/assets/images/basic-shield.png',
@@ -275,7 +276,7 @@ const EVENTS:IEvent[] = [
   {
     id: 5,
     name: 'ng-vegas',
-    date: new Date( '2/10/2037'),
+    date: new Date('2/10/2037'),
     time: '9:00 am',
     price: 400.00,
     imageUrl: '/assets/images/ng-vegas.png',
@@ -319,7 +320,7 @@ export class EventServiceService {
 
   constructor() { }
 
-  getEvents():Observable<IEvent[]> {
+  getEvents(): Observable<IEvent[]> {
     let subject = new Subject<IEvent[]>();
     setTimeout(() => {
       subject.next(EVENTS);
@@ -328,20 +329,46 @@ export class EventServiceService {
     return subject;
   }
 
-  getEvent(id: number):IEvent{
+  getEvent(id: number): IEvent {
     return EVENTS.find(e => e.id === id);
   }
 
   //Save a newly created event.
-  saveEvent(event){
+  saveEvent(event) {
     event.id = 999;
     event.session = [];
     EVENTS.push(event);
   }
 
-  updateEvent(event){
+  updateEvent(event) {
     let index = EVENTS.findIndex(x => x.id = event.id);
     EVENTS[index] = event;
+  }
+
+  searchSessions(searchTerm: string) {
+    var term = searchTerm.toLocaleLowerCase();
+    var result: ISession[] = [];
+
+    //Look through the events to find the sessions that matches the search term.
+    EVENTS.forEach(event => {
+      //return a list of sessions where the name contains the search term. Filter() returns an array with the result.
+      var matchingSessions = event.sessions.filter(session => 
+        session.name.toLocaleLowerCase().indexOf(term) > -1);
+
+        //The event id is not part of the session object, so we need to add the event id to the session temporarily. 
+        matchingSessions = matchingSessions.map((session: any) => {
+          session.eventId = event.id;
+          return session;
+        })
+        result = result.concat(matchingSessions);
+      })
+    
+    var emitter = new EventEmitter(true);//true makes the emitter return asyncronasly, which mankes it possible to subscribe to it in the navbar component.
+    setTimeout(() => {
+      emitter.emit(result);
+    }, 100)
+    
+    return emitter;
   }
 }
 

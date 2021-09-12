@@ -10,7 +10,7 @@ export interface IEvent{
         city: string
         country: string
     },
-    onlineUrl?: string,
+    onlineUrl?: string
     sessions: ISession[]
 }
 
