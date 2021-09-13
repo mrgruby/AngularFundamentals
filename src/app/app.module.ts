@@ -23,6 +23,7 @@ import { CollapsibleWellComponent } from './shared/collapsible-well/collapsible-
 import { DurationPipe } from './shared/pipes/duration.pipe';
 import { SimpleModalComponent } from './shared/simple-modal/simple-modal.component';
 import { ModalTriggerDirective } from './shared/directives/modal-trigger.directive';
+import { UpvoteComponent } from './upvote/upvote.component';
 
 let toastr:Toastr = window['toastr'];
 let jQuery = window['$'];
@@ -41,7 +42,7 @@ let jQuery = window['$'];
     CollapsibleWellComponent, 
     DurationPipe, 
     SimpleModalComponent, 
-    ModalTriggerDirective
+    ModalTriggerDirective, UpvoteComponent
   ],
   imports: [
     BrowserModule,

@@ -27,6 +27,12 @@ export class SessionListComponent implements OnInit, OnChanges {
     }
   }
 
+  toggleVote(session:ISession){
+    if(this.userHasVoted(session))
+  }
+
+  userHasVoted(session:ISession){}
+
   filterSessions(filter) {
     if (filter === 'all') {
       //Slice creates a clone of the sessions array, We want to display all sessions if 'all' is selected, but not the original sessions array.
