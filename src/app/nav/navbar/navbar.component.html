@@ -34,7 +34,9 @@
           <div class="form-group">
             <input [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control" placeholder="Search Sessions" >
           </div>
-          <button class="btn btn-default" >
+          <!-- modal-trigger is a directive, that cna add new functionality to existing DOM elements. So here, we create a new directive called modal-trigger,
+            that is triggered by the button. It will be in shared/directives/modal-trigger.directive.ts-->
+          <button class="btn btn-default" modal-trigger="searchResults">
             Search
           </button>
         </form>
@@ -43,7 +45,7 @@
   </div>
 
   <!-- Use content projection as for the collapsible-well -->
-  <simple-modal title="Found Sessions">
+  <simple-modal closeOnBodyClick="true" title="Found Sessions" elementId="searchResults">
     <div class="list-group">
       <a class="list-group-item" *ngFor="let session of foundSessions" [routerLink]="['/events', session.eventId]">{{session.name}}</a>
     </div>
