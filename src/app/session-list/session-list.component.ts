@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ISession } from '../models/event.model';
+import { AuthService } from '../shared/services/auth.service';
+import { VoterService } from '../shared/services/voter.service';
 
 @Component({
   selector: 'app-session-list',
@@ -8,7 +10,7 @@ import { ISession } from '../models/event.model';
 })
 export class SessionListComponent implements OnInit, OnChanges {
 
-  constructor() { }
+  constructor(private voterService: VoterService, private auth: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -27,11 +29,19 @@ export class SessionListComponent implements OnInit, OnChanges {
     }
   }
 
-  toggleVote(session:ISession){
-    if(this.userHasVoted(session))
+  toggleVote(session: ISession) {
+    if (this.userHasVoted(session))
+      this.voterService.deleteVoter(session, this.auth.currentUser.userName);//To get the username, we need to use the authService, which has a currentUser, which has the username property.
+    else {
+      this.voterService.addVoter(session, this.auth.currentUser.userName);
+    }
+    if (this.sortBy === 'votes')
+      this.filteredSessions.sort(sortByVotesDesc)
   }
 
-  userHasVoted(session:ISession){}
+  userHasVoted(session: ISession) {
+    return this.voterService.userHasVoted(session, this.auth.currentUser.userName);
+  }
 
   filterSessions(filter) {
     if (filter === 'all') {

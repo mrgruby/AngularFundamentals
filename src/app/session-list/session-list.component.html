@@ -1,7 +1,9 @@
 <!-- sessions comes from the sessions input parameter defined in the SessionListComponent, and they are added to it in the eventDetails component html -->
 <div class="row" *ngFor="let session of filteredSessions">
   <div class="col-md-1">
-    <upvote (click)="toggleVote()" [count]="session.votes.length" [voted]="userHasVoted(session)"></upvote>
+    <div *ngIf="auth.isAuthenticated()">
+      <upvote (vote)="toggleVote(session)" [count]="session.voters.length" [voted]="userHasVoted(session)"></upvote>
+    </div>
   </div>
   <div class="col-md-10">
     <!-- The title added to the collapsible-well Component, using the title input parameter.
@@ -12,7 +14,7 @@ The title can then be used in the collapsible-well Component html, and the outpu
         <i *ngIf="session.voters.length > 3" class="glyphicon glyphicon-fire" style="color:red;"></i>
       </div>
 
-      <div well-body> 
+      <div well-body>
         <h6>Presenter: {{session.presenter}}</h6>
         <span>Duration: {{session.duration | duration}}</span><br />
         <span>Level: {{session.level}}</span>
