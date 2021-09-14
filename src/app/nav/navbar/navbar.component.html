@@ -34,8 +34,10 @@
           <div class="form-group">
             <input [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control" placeholder="Search Sessions" >
           </div>
-          <!-- modal-trigger is a directive, that cna add new functionality to existing DOM elements. So here, we create a new directive called modal-trigger,
-            that is triggered by the button. It will be in shared/directives/modal-trigger.directive.ts-->
+          <!-- modal-trigger is a directive, that can add new functionality to existing DOM elements. So here, we create a new directive called modal-trigger,
+            that is triggered by the button. It will be in shared/directives/modal-trigger.directive.ts.
+          The value of modal-trigger is the same as the elementId of the simple-modal it opens. The modal-trigger can then be passed
+        in to the directive using an input parameter with the same name i.e. "modal-trigger" (See modal-trigger.directive.ts) -->
           <button class="btn btn-default" modal-trigger="searchResults">
             Search
           </button>

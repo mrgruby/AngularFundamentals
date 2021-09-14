@@ -10,6 +10,7 @@ export class SimpleModalComponent implements OnInit {
   @Input() title: string;
   @Input() elementId: string;
   @Input() closeOnBodyClick: string;//This is used as a setting for weather you want to close the modal on body click, or not.
+
   //When this component is initialized, containerEl will give access to the DOM element that has the #modalContainer
   @ViewChild('modalContainer') containerEl: ElementRef;
 
@@ -21,6 +22,6 @@ export class SimpleModalComponent implements OnInit {
   //When the user clicks a result in the result modal-dialog, the modal should close
   closeModal() {
     if (this.closeOnBodyClick === "true")
-      this.$(this.containerEl.nativeElement).modal('hide')
+      this.$(this.containerEl.nativeElement).modal('hide')//containerEl points to the html element that has the #modalContainer on it.
   }
 }
