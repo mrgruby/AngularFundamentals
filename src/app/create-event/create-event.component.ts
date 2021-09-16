@@ -11,6 +11,8 @@ export class CreateEventComponent {
   constructor(private router:Router, private eventService:EventServiceService) { }
   event;
 
+  //isDirty is used by a route guard function to make sure that you can't navigate away from the create new event page, until the event is saved.
+  //This function is located in the app.module.ts file.
   public isDirty: boolean = true;
 
   
