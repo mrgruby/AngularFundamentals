@@ -2,7 +2,7 @@ import { Directive } from '@angular/core';
 import { FormGroup, Validator, NG_VALIDATORS } from '@angular/forms';
 
 @Directive({
-  selector: '[appLocationValidator]',
+  selector: '[validateLocation]',
   //For this directive to work as a validator, it must be added to angulars list of validators i.e. NG_VALIDATORS. multi:true means that it is added to the existing list.
   providers: [{provide: NG_VALIDATORS, useExisting:LocationValidatorDirective, multi:true}]
 })
