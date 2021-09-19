@@ -25,6 +25,7 @@ import { SimpleModalComponent } from './shared/simple-modal/simple-modal.compone
 import { ModalTriggerDirective } from './shared/directives/modal-trigger.directive';
 import { UpvoteComponent } from './upvote/upvote.component';
 import { LocationValidatorDirective } from './validators/location-validator.directive';
+import { HttpClientModule } from '@angular/common/http';
 
 let toastr:Toastr = window['toastr'];
 let jQuery = window['$'];
@@ -45,13 +46,14 @@ let jQuery = window['$'];
     SimpleModalComponent, 
     ModalTriggerDirective, 
     UpvoteComponent, 
-    LocationValidatorDirective
+    LocationValidatorDirective,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    HttpClientModule
   ],
   //Providers are shared across modules in the app, so if they are registered here in app.module, they can be used in the entire app.
   //Therefore, the auth service is registered here.
