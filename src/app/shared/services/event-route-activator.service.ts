@@ -14,7 +14,8 @@ export class EventRouteActivatorService implements CanActivate {
   constructor(private eventService: EventServiceService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot) {
-    const eventExists = !!this.eventService.getEvent(+route.params['id'])//Check if the event with the given id exists.
+    //Check if the event with the given id exists.
+    const eventExists = !!this.eventService.getEvent(+route.params['id'])
     //!! casts to boolean. + casts to a number, needs to be done since the route.params['id'] is a string
 
     //If the event does not exist, redirect to an error page.

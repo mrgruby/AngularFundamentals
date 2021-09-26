@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { Error404Component } from './errors/404.component';
-import { EventRouteActivatorService } from './shared/services/event-route-activator.service';
+//import { EventRouteActivatorService } from './shared/services/event-route-activator.service';
 import { EventsListResolverService } from './shared/services/events-list-resolver.service';
 import { AuthService } from './shared/services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,6 +26,7 @@ import { ModalTriggerDirective } from './shared/directives/modal-trigger.directi
 import { UpvoteComponent } from './upvote/upvote.component';
 import { LocationValidatorDirective } from './validators/location-validator.directive';
 import { HttpClientModule } from '@angular/common/http';
+import { EventResolver } from './shared/services/event.resolver';
 
 let toastr:Toastr = window['toastr'];
 let jQuery = window['$'];
@@ -67,7 +68,8 @@ let jQuery = window['$'];
       provide: JQ_TOKEN, 
       useValue: jQuery
     },
-    EventRouteActivatorService,
+    //EventRouteActivatorService,
+    EventResolver,
     EventsListResolverService,
     {
       provide: 'canDeactivateCreateEvent',
