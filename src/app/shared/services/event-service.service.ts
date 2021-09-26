@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of, pipe, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { IEvent, ISession } from 'src/app/models/event.model';
@@ -319,22 +320,16 @@ const EVENTS: IEvent[] = [
 })
 export class EventServiceService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
-  getEvents():Observable<IEvent[]> {
+  getEvents(): Observable<IEvent[]> {
     return this.http.get<IEvent[]>('/api/events')
       .pipe(catchError(this.handleError<IEvent[]>('getEvents', [])))
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      return of(result as T);
-    }
-  }
-
-  getEvent(id: number): IEvent {
-    return EVENTS.find(e => e.id === id);
+  getEvent(id: number): Observable<IEvent> {
+    return this.http.get<IEvent>('/api/events/' + id)
+      .pipe(catchError(this.handleError<IEvent>('getEvents')))
   }
 
   //Save a newly created event.
@@ -356,23 +351,33 @@ export class EventServiceService {
     //Look through the events to find the sessions that matches the search term.
     EVENTS.forEach(event => {
       //return a list of sessions where the name contains the search term. Filter() returns an array with the result.
-      var matchingSessions = event.sessions.filter(session => 
+      var matchingSessions = event.sessions.filter(session =>
         session.name.toLocaleLowerCase().indexOf(term) > -1);
 
-        //The event id is not part of the session object, so we need to add the event id to the session temporarily. 
-        matchingSessions = matchingSessions.map((session: any) => {
-          session.eventId = event.id;
-          return session;
-        })
-        result = result.concat(matchingSessions);
+      //The event id is not part of the session object, so we need to add the event id to the session temporarily. 
+      matchingSessions = matchingSessions.map((session: any) => {
+        session.eventId = event.id;
+        return session;
       })
-    
+      result = result.concat(matchingSessions);
+    })
+
     var emitter = new EventEmitter(true);//true makes the emitter return asyncronasly, which mankes it possible to subscribe to it in the navbar component.
     setTimeout(() => {
       emitter.emit(result);
     }, 100)
-    
+
     return emitter;
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      if(error.status == 404){
+        this.router.navigate(['/404']);
+      }
+      //console.error(error);
+      return of(result as T);
+    }
   }
 }
 

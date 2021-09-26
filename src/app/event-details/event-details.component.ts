@@ -19,11 +19,11 @@ export class EventDetailsComponent implements OnInit {
   id: number;
   ngOnInit(): void {
     this.route.params.forEach((params:Params) => {
-      this.event = this.eventService.getEvent(+params['id']);//+ sign casts to a number
-      this.addMode = false;
+      this.eventService.getEvent(+params['id']).subscribe((event => {
+        this.event = event;
+        this.addMode = false;
+      }));//+ sign casts to a number
     })
-    // this.id = +this.route.snapshot.params['id']
-    // this.event = this.eventService.getEvent(this.id);
   }
 
   addSession(){
