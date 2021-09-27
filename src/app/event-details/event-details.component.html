@@ -52,6 +52,6 @@
 
 <!-- Here, the sessions are added to the SessionListComponent, using the sessions input parameter.
 The sessions can then be used in the SessionListComponent html, and the output will be shown here in the app-session-list element -->
-<app-session-list [filterBy]="filterBy" [sortBy]="sortBy" [sessions]=event?.sessions *ngIf="!addMode"></app-session-list>
+<app-session-list [eventId]="event?.id" [filterBy]="filterBy" [sortBy]="sortBy" [sessions]=event?.sessions *ngIf="!addMode"></app-session-list>
 <app-create-session *ngIf="addMode" (addNewSession)="addNewSession($event)"
   (cancelAddNewSession)="cancelAddNewSession()"></app-create-session>

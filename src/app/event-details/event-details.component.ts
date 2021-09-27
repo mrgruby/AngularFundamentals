@@ -30,13 +30,14 @@ export class EventDetailsComponent implements OnInit {
     this.addMode = true;
   }
 
+  //The only time we need to update an event, is when adding a new session to it.
   addNewSession(session: ISession) {
-    //Create a new id for the new session. This will take the session id with the biggets value, from the sessions array.
+    //Create a new id for the new session. This will take the session id with the biggest value, from the sessions array.
     const nextId = Math.max.apply(null, this.event.sessions.map(s => s.id));
-    //sSet the new session id to nextId plus 1 to make it unique.
+    //Set the new session id to nextId plus 1 to make it unique.
     session.id = nextId + 1;
     this.event.sessions.push(session);
-    this.eventService.updateEvent(this.event);
+    this.eventService.saveEvent(this.event).subscribe();
     this.addMode = false;
   }
 

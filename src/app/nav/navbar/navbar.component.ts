@@ -15,9 +15,9 @@ export class NavbarComponent implements OnInit {
   foundSessions:ISession[];
   ngOnInit(): void {
   }
+
   searchSessions(searchTerm){
-    this.eventService.searchSessions(searchTerm).subscribe
-    (sessions => {
+    this.eventService.searchSessions(searchTerm).subscribe(sessions => {
       this.foundSessions = sessions;
     })
   }

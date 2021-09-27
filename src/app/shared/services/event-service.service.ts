@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, pipe, Subject } from 'rxjs';
@@ -329,14 +329,15 @@ export class EventServiceService {
 
   getEvent(id: number): Observable<IEvent> {
     return this.http.get<IEvent>('/api/events/' + id)
-      .pipe(catchError(this.handleError<IEvent>('getEvents')))
+      .pipe(catchError(this.handleError<IEvent>('getEvent')))
   }
 
   //Save a newly created event.
+  //Also handles updates since the API is made so that, if the posted event exists, it will be updated.
   saveEvent(event) {
-    event.id = 999;
-    event.session = [];
-    EVENTS.push(event);
+    let options = {headers: new HttpHeaders({'Content-Type':'application/json'})}
+    return this.http.post<IEvent>('/api/events', event, options)
+    .pipe(catchError(this.handleError<IEvent>('saveEvent')));
   }
 
   updateEvent(event) {
@@ -344,30 +345,32 @@ export class EventServiceService {
     EVENTS[index] = event;
   }
 
-  searchSessions(searchTerm: string) {
-    var term = searchTerm.toLocaleLowerCase();
-    var result: ISession[] = [];
+  searchSessions(searchTerm: string):Observable<ISession[]> {
+    return this.http.get<ISession[]>('/api/sessions/search?search='+searchTerm)
+    .pipe(catchError(this.handleError<ISession[]>('searchSessions')));
+    // var term = searchTerm.toLocaleLowerCase();
+    // var result: ISession[] = [];
 
-    //Look through the events to find the sessions that matches the search term.
-    EVENTS.forEach(event => {
-      //return a list of sessions where the name contains the search term. Filter() returns an array with the result.
-      var matchingSessions = event.sessions.filter(session =>
-        session.name.toLocaleLowerCase().indexOf(term) > -1);
+    // //Look through the events to find the sessions that matches the search term.
+    // EVENTS.forEach(event => {
+    //   //return a list of sessions where the name contains the search term. Filter() returns an array with the result.
+    //   var matchingSessions = event.sessions.filter(session =>
+    //     session.name.toLocaleLowerCase().indexOf(term) > -1);
 
-      //The event id is not part of the session object, so we need to add the event id to the session temporarily. 
-      matchingSessions = matchingSessions.map((session: any) => {
-        session.eventId = event.id;
-        return session;
-      })
-      result = result.concat(matchingSessions);
-    })
+    //   //The event id is not part of the session object, so we need to add the event id to the session temporarily. 
+    //   matchingSessions = matchingSessions.map((session: any) => {
+    //     session.eventId = event.id;
+    //     return session;
+    //   })
+    //   result = result.concat(matchingSessions);
+    // })
 
-    var emitter = new EventEmitter(true);//true makes the emitter return asyncronasly, which mankes it possible to subscribe to it in the navbar component.
-    setTimeout(() => {
-      emitter.emit(result);
-    }, 100)
+    // var emitter = new EventEmitter(true);//true makes the emitter return asyncronasly, which mankes it possible to subscribe to it in the navbar component.
+    // setTimeout(() => {
+    //   emitter.emit(result);
+    // }, 100)
 
-    return emitter;
+    // return emitter;
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
