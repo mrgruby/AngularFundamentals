@@ -11,18 +11,25 @@ export class LoginComponent implements OnInit {
   password
   userName
   mouseOverLogin: boolean
+  loginInvalid = false;
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  login(formValues){
-    this.authService.loginUser(formValues.userName, formValues.password);
-    this.router.navigate(['events']);
+  login(formValues) {
+    this.authService.loginUser(formValues.userName, formValues.password)
+      .subscribe(resp => {
+        if (!resp) {
+          this.loginInvalid = true;//Use this to show a message to the user, if their login failed.
+        }
+        else {
+          this.router.navigate(['events']);
+        }
+      });
   }
 
-  cancel(){
+  cancel() {
     this.router.navigate(['events']);
   }
-
 }
