@@ -27,6 +27,7 @@ import { UpvoteComponent } from './upvote/upvote.component';
 import { LocationValidatorDirective } from './validators/location-validator.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { EventResolver } from './shared/services/event.resolver';
+import { ClipboardModule } from 'ngx-clipboard';
 
 let toastr:Toastr = window['toastr'];
 let jQuery = window['$'];
@@ -54,7 +55,8 @@ let jQuery = window['$'];
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
-    HttpClientModule
+    HttpClientModule,
+    ClipboardModule
   ],
   //Providers are shared across modules in the app, so if they are registered here in app.module, they can be used in the entire app.
   //Therefore, the auth service is registered here.

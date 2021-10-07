@@ -22,6 +22,7 @@
     "@angular/router": "~11.2.8",
     "ngf-bootstrap": "0.0.5",
     "ngf-server": "^1.0.3",
+    "ngx-clipboard": "^14.0.1",
     "rxjs": "~6.6.0",
     "toastr": "^2.1.4",
     "tslib": "^2.0.0",

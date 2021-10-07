@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+//These are provided by the toastr service. The token and the Toastr interface are both registrered in app.module to make them globally available
 import { TOASTR_TOKEN, Toastr } from '../../shared/services/toaster.service';
 
 @Component({
