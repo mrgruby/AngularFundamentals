@@ -19,6 +19,8 @@ export class VoterService {
     //The voterService doesn't return any data to where the deleteVoter method is used, so we can subscribe to it directly here instead of where the deleteVoter method is used.
     .pipe(catchError(this.handleError('deleteVoter'))).subscribe();
   }
+
+
   addVoter(eventId:number, session: ISession, userName:string){
     session.voters.push(userName);
 
@@ -29,6 +31,8 @@ export class VoterService {
     //The voterService doesn't return any data to where the addVoter method is used, so we can subscribe to it directly here instead of where the addVoter method is used.
     .pipe(catchError(this.handleError('addVoter'))).subscribe();
   }
+
+  
   userHasVoted(session: ISession, userName:string){
     //some returns true if the collection has an item that matches the specified condition, in this case if the passed in username exists in the voters array
     return session.voters.some(voter => voter === userName)
