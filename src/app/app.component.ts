@@ -13,6 +13,6 @@ export class AppComponent {
   //Here in the app.component, we check if the user is still autheticated. 
   //For instance, when the user refreshes the page, this ngOnInit is run.
   ngOnInit() {
-    this.auth.checkAuthenticationStatus().subscribe();
+    this.auth.checkAuthenticationStatus();
   }
 }
